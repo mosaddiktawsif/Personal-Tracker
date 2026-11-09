@@ -17,51 +17,32 @@ Do not reinstall any of this.
 | Node.js | v24.11.0 (`.nvmrc` wants 24) | `node -v` |
 | npm | 11.6.1 | `npm -v` |
 | Git identity | `mosaddiktawsif <mosaddik.tawsif@gmail.com>` | `git config user.email` |
-| Repo | initialised on `main`, 5 commits | `git log --oneline` |
+| Repo | initialised on `main`, 7 commits | `git log --oneline` |
 | Dependencies | installed (`node_modules/` present) | `ls node_modules > /dev/null && echo ok` |
 | Postgres | installed locally, **not running right now** | `netstat -ano \| grep ':5432 '` |
 | Docker | **not installed** — not needed until Week 5 | `docker -v` |
-| GitHub remote | **not connected yet** — Step 1 | `git remote -v` |
+| GitHub remote | connected and pushed: `mosaddiktawsif/Personal-Tracker` | `git status -sb` → `## main...origin/main` |
 
 ---
 
-## Step 1 — Connect the repo to GitHub (one time, ~5 min)
+## Step 1 — GitHub: done (2026-11-09)
 
-This is the only "setup" thing outstanding. It is not a blocker for learning;
-it matters because Week 5 needs CI and a deploy, and because your commits are
-worth having off this laptop.
+Nothing to do here. The repo is connected and pushed:
 
-1. Save the work you already have:
+```
+origin  https://github.com/mosaddiktawsif/Personal-Tracker.git
+main    tracks origin/main, in sync, working tree clean
+```
 
-   ```bash
-   git add week0-audit.md
-   git commit -m "Record Week 0 audit answers as the baseline"
-   ```
+Confirm any time with `git status -sb`. It should print `## main...origin/main`
+with **no** `ahead`/`behind` and no `untracked` lines. If it says `ahead 1`,
+you have a commit that is only on this laptop — `git push` fixes it.
 
-2. Create an **empty** repository on github.com. Important: no README, no
-   `.gitignore`, no licence — an empty repo. Copy the URL it shows you.
+Already verified for you: `.env` is ignored by git and was never pushed, and
+neither was `.local/` (your database files) or `node_modules/`.
 
-3. Connect and push:
-
-   ```bash
-   git remote add origin https://github.com/<your-username>/<repo-name>.git
-   git push -u origin main
-   ```
-
-4. **Before you push, prove your secrets are not going with it:**
-
-   ```bash
-   git check-ignore -v .env
-   ```
-
-   It must print a line naming `.gitignore`. If it prints nothing, stop and fix
-   `.gitignore` first. `.env` holds your database password.
-
-No GitHub CLI is installed (`gh`), and you do not need it — the web flow above
-is the whole job. If you install it later, `gh auth login` then `gh repo create`
-does the same thing.
-
-Private or public both work; Week 5's CI works with either.
+From now on the loop is just: change a file → `git add <file>` →
+`git commit -m "what changed and why"` → `git push`.
 
 ---
 
