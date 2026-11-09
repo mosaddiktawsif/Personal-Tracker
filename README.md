@@ -85,6 +85,7 @@ already applied.
 | `npm test` | Run the test suite once |
 | `npm run test:watch` | Re-run tests on change |
 | `npm run db:migrate` | Apply pending `db/migrations/*.sql` |
+| `npm run check:week1` | Grade your schema against the Week 1 checklist (read-only) |
 
 > `.env` overrides your shell environment locally, so change `PORT` there rather
 > than exporting it. In production there is no `.env`, and the platform's

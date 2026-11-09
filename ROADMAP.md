@@ -93,6 +93,8 @@ The highest-leverage skill on this list. Weak SQL is the most common junior back
 - [ ] Seed script that produces 10k rows so you can *feel* performance
 - [ ] Fix an N+1 query by replacing a loop with one join
 
+- [ ] `npm run check:week1` passes every check (it reads your schema and names what is missing)
+
 **Learn:** PostgreSQL official tutorial + [use-the-index-luke.com](https://use-the-index-luke.com). That's it.
 
 **Artifact:** `schema.sql` + migrations + seed + a `queries.md` with your best 5 queries and their `EXPLAIN` output before/after indexing.
