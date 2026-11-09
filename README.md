@@ -9,6 +9,10 @@ attention goes where it belongs: **designing your own schema.**
 What it deliberately does **not** give you: a domain schema, real endpoints, or
 auth. Those are Weeks 1–3, and they are yours to build.
 
+> Coming back after a break? Read **[START-HERE.md](./START-HERE.md)** first —
+it is the shortest ordered list of what to type next, including the one-time
+GitHub setup and the command that starts the database.
+
 ---
 
 ## Prerequisites
