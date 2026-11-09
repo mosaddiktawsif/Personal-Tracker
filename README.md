@@ -28,7 +28,7 @@ PowerShell equivalents are in [Windows notes](#windows-notes).
 
 ```bash
 # 1. get the code
-cd backend-week1            # or: git clone <your-repo-url> && cd backend-week1
+cd /h/Local                 # this project on Windows (Git Bash); or: git clone <url> && cd <name>
 
 # 2. install dependencies
 npm install
@@ -149,10 +149,13 @@ Do not look for a schema to copy. Designing the constraints *is* the exercise.
 Docker Desktop needs a (free) install and, on Windows, the WSL2 backend. Install
 it when you can — Week 5 is about Docker, so it is not optional long-term.
 
-If you want to start today, you can run a portable Postgres with no admin rights:
+If you want to start today, you can run a portable Postgres with no admin
+rights. **This fallback is Windows-only** (it uses `.exe` binaries and the
+`@embedded-postgres/windows-x64` package); on macOS/Linux, install Docker or use
+your distro's `postgresql` package instead.
 
 ```bash
-npm install --prefix .local/pg @embedded-postgres/windows-x64
+npm install --prefix .local/pg @embedded-postgres/windows-x64@17.11.0-beta.19
 PG=.local/pg/node_modules/@embedded-postgres/windows-x64/native/bin
 printf 'app' > .local/pw
 $PG/initdb.exe -D .local/pgdata -U app -A scram-sha-256 --pwfile=.local/pw -E UTF8 --locale=C
@@ -163,6 +166,10 @@ node -e "const{Client}=require('pg');(async()=>{const c=new Client({host:'127.0.
 
 Stop it later with `$PG/pg_ctl.exe -D .local/pgdata stop`. `.local/` is gitignored,
 so this is a local convenience, not part of the project.
+
+> Note: run `pg_ctl` **without piping its output** (`| tail`, `| grep`). On
+> Windows the detached Postgres server inherits the pipe handle, so the pipe
+> never closes and your command appears to hang.
 
 ---
 
