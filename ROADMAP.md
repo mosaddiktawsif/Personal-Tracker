@@ -73,7 +73,7 @@ Local Postgres and Redis from day one: `docker compose up -d`. Never develop aga
 
 Anything you fumble → that's your Week 1–3 focus, not a reason to panic.
 
-**Build:** a service with `GET /health` and `GET /db-check` that queries Postgres, deployed to Railway or Fly.io, with the URL in the README.
+**Build:** a service with `GET /health` and `GET /db/check` that queries Postgres, deployed to Railway or Fly.io, with the URL in the README.
 
 **Learn:** MDN "Overview of HTTP" + your framework's official getting-started. Nothing else.
 
@@ -97,7 +97,7 @@ The highest-leverage skill on this list. Weak SQL is the most common junior back
 
 **Learn:** PostgreSQL official tutorial + [use-the-index-luke.com](https://use-the-index-luke.com). That's it.
 
-**Artifact:** `schema.sql` + migrations + seed + a `queries.md` with your best 5 queries and their `EXPLAIN` output before/after indexing.
+**Artifact:** migrations + `db/seed.ts` + `queries.md` with your best 5 queries and their `EXPLAIN` output before/after indexing.
 
 ---
 

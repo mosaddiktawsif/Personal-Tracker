@@ -45,11 +45,17 @@ docker compose ps
 # 6. create the tables
 npm run db:migrate
 
-# 7. prove everything works
+# 7. seed your domain tables (prints guidance until you have a schema)
+npm run db:seed
+
+# 8. prove the app works
 npm test
+
+# 9. see how far Week 1 is from done
+npm run check:week1
 ```
 
-Step 7 should end with something like:
+Step 8 should end with something like:
 
 ```
 ✓ test/health.test.ts (3 tests)
@@ -57,6 +63,10 @@ Step 7 should end with something like:
 Test Files  2 passed (2)
      Tests  5 passed (5)
 ```
+
+Step 9 is a checklist, not a test. On a fresh checkout it **exits 1 and reports
+seven failures**, because your schema doesn't exist yet — that is the correct
+result on day one. Everything it lists is your Week 1 to-do list, in order.
 
 Then run the server and look at it yourself:
 
@@ -80,12 +90,14 @@ already applied.
 |---|---|
 | `npm run dev` | Start with reload on file change (`tsx watch`) |
 | `npm run build` | Compile TypeScript to `dist/` |
-| `npm start` | Run the compiled build (`node dist/src/server.js`) |
+| `npm start` | Build, then run the compiled server (`prestart` builds for you) |
 | `npm run typecheck` | Strict type check, no output files |
 | `npm test` | Run the test suite once |
 | `npm run test:watch` | Re-run tests on change |
 | `npm run db:migrate` | Apply pending `db/migrations/*.sql` |
-| `npm run check:week1` | Grade your schema against the Week 1 checklist (read-only) |
+| `npm run db:seed` | Run the seeders in `db/seed.ts` (`-- --rows=N`, default 10000) |
+| `npm run db:sql -- "..."` | Run one statement and print the result — this is how you get `EXPLAIN` output |
+| `npm run check:week1` | Grade your schema against the Week 1 checklist (read-only; exits 1 until it passes) |
 
 > `.env` overrides your shell environment locally, so change `PORT` there rather
 > than exporting it. In production there is no `.env`, and the platform's
@@ -103,12 +115,17 @@ src/
   server.ts      listen + graceful shutdown
 db/
   migrate.ts     forward-only SQL migration runner, ~90 lines
+  seed.ts        your seeders go here (registry starts empty, on purpose)
+  sql.ts         run one statement from the terminal — needed for EXPLAIN
   migrations/    001_meta.sql (infrastructure), 002_domain_schema.sql.todo (yours)
+scripts/
+  check-week1.ts grades your schema against the Week 1 checklist
 test/
   helpers.ts     boots the real server on a random port
   health.test.ts liveness, and JSON 404s
   db.test.ts     end-to-end proof the database wiring works
 week0-audit.md   fill this in before Week 1
+queries.md       your 5 measured queries — the Week 1 artifact
 ROADMAP.md       the 7-week plan
 ```
 
@@ -124,7 +141,7 @@ unreachable or unmigrated. The tests hit both, so a green suite means more than
 
 ---
 
-## Do these two things next
+## Do these next
 
 **1. Fill in `week0-audit.md`** — 20 minutes, no searching. It tells you which of
 Weeks 1–3 need extra hours and which reading you can skip. Scoring guidance is
@@ -142,6 +159,20 @@ inventory, a clinic, a small marketplace. Requirements are listed at the top of
 that file and in [ROADMAP.md](./ROADMAP.md) under Week 1.
 
 Do not look for a schema to copy. Designing the constraints *is* the exercise.
+
+**3. Seed it, then measure it.** Once your tables exist, add a seeder per table
+in `db/seed.ts` (the file shows the shape), then:
+
+```bash
+npm run db:seed                              # 10k rows by default
+npm run db:sql -- "EXPLAIN ANALYZE SELECT ..."
+npm run check:week1
+```
+
+Record what you measured in `queries.md` — five queries, each with the plan
+before and after an index, and the timings. That file is the Week 1 artifact.
+`check:week1` stays red until the schema holds up; `queries.md` stays empty until
+you have real numbers.
 
 ---
 
@@ -187,6 +218,9 @@ produce. They name the fix on purpose.
 | `It has not been migrated yet` | Database is empty | `npm run db:migrate` |
 | `EADDRINUSE: 3000` | Something else owns the port | Change `PORT` in `.env` (e.g. 3001) |
 | `docker: command not found` | Docker Desktop not installed | See [No Docker yet?](#no-docker-yet) |
+| `[seed] no domain tables yet` | You haven't written a schema yet | Expected on day one — see [Do these next](#do-these-next) |
+| `check:week1` exits 1 | The Week 1 checklist isn't complete | Read its list top to bottom; that _is_ the feature |
+| `Cannot find module 'dist/src/server.js'` | Ran the build output without building | `npm start` builds for you now; or `npm run build` first |
 
 ---
 

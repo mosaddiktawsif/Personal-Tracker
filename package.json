@@ -9,11 +9,14 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc -p tsconfig.json",
+    "prestart": "npm run build",
     "start": "node dist/src/server.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "db:migrate": "tsx db/migrate.ts",
+    "db:seed": "tsx db/seed.ts",
+    "db:sql": "tsx db/sql.ts",
     "check:week1": "tsx scripts/check-week1.ts"
   },
   "dependencies": {

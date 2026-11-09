@@ -187,5 +187,8 @@ Next actions, in order:
 
 1. `cp .env.example .env`
 2. Get Postgres running and apply migrations — see `README.md`
-3. `npm test` — it must pass before you design anything
-4. Open `db/migrations/002_domain_schema.sql.todo` and start your Week 1 schema
+3. `npm run db:seed` — prints guidance until your schema exists
+4. `npm test` — it must pass before you design anything
+5. Open `db/migrations/002_domain_schema.sql.todo` and start your Week 1 schema
+6. `npm run check:week1` after every migration, until it is green
+7. Record five measured queries in `queries.md` — the Week 1 artifact
