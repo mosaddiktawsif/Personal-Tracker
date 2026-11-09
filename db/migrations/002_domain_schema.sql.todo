@@ -1,0 +1,29 @@
+-- 002_domain_schema.sql.todo
+--
+-- THIS FILE IS INTENTIONALLY NOT RUN. The migrate runner only picks up *.sql.
+--
+-- Your Week 1 deliverable lives here, and it is yours to design — no schema is
+-- provided on purpose, because designing it is the entire lesson.
+--
+-- How to use it:
+--   1. Rename this file to 002_domain_schema.sql
+--      (git mv db/migrations/002_domain_schema.sql.todo db/migrations/002_domain_schema.sql)
+--   2. Write your tables.
+--   3. Run: npm run db:migrate
+--   4. Run: npm run db:migrate again — it should say "0 applied". Migrations must
+--      be safe to run twice on an already-migrated database.
+--
+-- Requirements for the schema (ROADMAP.md -> Week 1):
+--   [ ] 6–10 tables for one realistic domain you care about
+--   [ ] Primary keys, foreign keys, NOT NULL, UNIQUE and CHECK constraints
+--   [ ] Money as integer cents or numeric — never float
+--   [ ] Timestamps as timestamptz, with sensible defaults
+--   [ ] Soft-delete or status columns where they genuinely matter
+--   [ ] A second migration that ALTERs an existing table (prove you can evolve it)
+--   [ ] A seed script with enough rows (10k+) to make indexes measurable
+--
+-- Deliberately NOT included, because Week 2 is where they belong:
+--   endpoints, auth tables, tenant scoping.
+--
+-- Pick a domain with real rules — bookings, invoices, inventory, a clinic, a
+-- small marketplace. "Users and posts" teaches you nothing about constraints.

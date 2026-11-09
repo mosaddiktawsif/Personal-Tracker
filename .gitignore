@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+coverage/
+
+# local env files — never commit these
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+
+# local scratch space (portable Postgres, experiments)
+.local/
+
+# editor / tool state
+.freebuff/
