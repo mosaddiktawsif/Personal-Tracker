@@ -199,6 +199,19 @@ node -e "const{Client}=require('pg');(async()=>{const c=new Client({host:'127.0.
 Stop it later with `$PG/pg_ctl.exe -D .local/pgdata stop`. `.local/` is gitignored,
 so this is a local convenience, not part of the project.
 
+This server does **not** survive a reboot, so the start line is the one you will
+run every morning. If you see `ECONNREFUSED 127.0.0.1:5432`, or two tests fail
+while the `/health` ones pass, it simply is not running yet — from the project
+root:
+
+```bash
+PG=.local/pg/node_modules/@embedded-postgres/windows-x64/native/bin
+$PG/pg_ctl.exe -D .local/pgdata -l .local/pg.log -o "-p 5432" -w start
+```
+
+You do not need to re-run `initdb` or `CREATE DATABASE`; the data directory and
+`backend_dev` are still there.
+
 > Note: run `pg_ctl` **without piping its output** (`| tail`, `| grep`). On
 > Windows the detached Postgres server inherits the pipe handle, so the pipe
 > never closes and your command appears to hang.
@@ -213,7 +226,8 @@ produce. They name the fix on purpose.
 | Message | Cause | Fix |
 |---|---|---|
 | `Missing required environment variable DATABASE_URL` | No `.env` | `cp .env.example .env` |
-| `Postgres is not accepting connections at 127.0.0.1:5432` | Postgres isn't running | `docker compose up -d`, then `docker compose ps` |
+| `Postgres is not accepting connections at 127.0.0.1:5432` | Postgres isn't running | `docker compose up -d`, or on the no-Docker path the `pg_ctl` start line in [No Docker yet?](#no-docker-yet) |
+| `connect ECONNREFUSED 127.0.0.1:5432` (in tests or `db:sql`) | Postgres stopped — it does not survive a reboot | Same start line in [No Docker yet?](#no-docker-yet); no re-init needed |
 | `Postgres rejected the credentials` | `.env` doesn't match compose | Both should be user `app`, password `app` |
 | `It has not been migrated yet` | Database is empty | `npm run db:migrate` |
 | `EADDRINUSE: 3000` | Something else owns the port | Change `PORT` in `.env` (e.g. 3001) |
